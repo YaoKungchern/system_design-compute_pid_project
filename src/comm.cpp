@@ -68,14 +68,24 @@ void processCommand(String cmd) {
 
 void serial_cb() 
 {
-    Serial.print("Distance: ");
+    // Serial.print("Distance:");
     Serial.print(distance);
-    Serial.print(" cm, PID Output: ");
-    Serial.print(servo_pid.get_output());
-    Serial.print(", Kp: ");
-    Serial.print(servo_pid.kp);
-    Serial.print(", Ki: ");
-    Serial.print(servo_pid.ki);
-    Serial.print(", Kd: ");
-    Serial.println(servo_pid.kd);
+    Serial.print("\n");
+    // Serial.print(" cm, PID Output: ");
+    // Serial.print(servo_pid.get_output());
+    // Serial.print(", Kp: ");
+    // Serial.print(servo_pid.kp);
+    // Serial.print(", Ki: ");
+    // Serial.print(servo_pid.ki);
+    // Serial.print(", Kd: ");
+    // Serial.println(servo_pid.kd);
 }
+
+/*__||_____||__
+  __||_____||__
+  ___\\___//___
+  _===========_
+  _____|||_____
+  _____|||_____
+  ______|______
+  ___防伪专用___*/

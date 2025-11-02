@@ -1,21 +1,36 @@
 #include "pid.h"
 
-pid::pid()
+/**
+ * @brief PID控制器构造函数
+ * @param kp 比例系数
+ * @param ki 积分系数
+ * @param kd 微分系数
+ * @param output_lm 输出限幅值
+ * @param i_lm 积分限幅值
+ * @param target 目标值
+ */
+pid::pid(float kp, float ki, float kd, float output_lm, float i_lm, float target)
 { 
     this->last_time = micros();
-    this->dt = 0.0f;
+    this->kp = kp; 
+    this->ki = ki;
+    this->kd = kd;
+    this->output_lm = output_lm;
+    this->i_lm = i_lm;
+    this->target = target;
 }
 
 void pid::update(float input)
 { 
     last_error = error;
+    float dt;
     dt = (micros() - last_time) / 1000000.0f;
     error = target - input;
     error_sum += error * dt;
     error_diff = (error - last_error) / dt;
-    if(ki * error_sum >= i_lm) error_sum = i_lm / ki;
+    if(abs(error_sum * ki) > i_lm) error_sum = i_lm*error_sum/abs(error_sum)/ki;
     output = kp * error + ki * error_sum + kd * error_diff;
-    if (output > output_lm) output = output_lm;
+    if (abs(output) > output_lm) output = output_lm*output/abs(output);
 }
 
 float pid::get_output()
@@ -30,5 +45,13 @@ void pid::reset()
     error_diff = 0.0f;
     last_error = 0.0f;
     last_time = micros();
-    dt = 0.0f;
 }
+
+/*__||_____||__
+  __||_____||__
+  ___\\___//___
+  _===========_
+  _____|||_____
+  _____|||_____
+  ______|______
+  ___防伪专用___*/

@@ -3,9 +3,13 @@
 
 #include<Arduino.h>
 
+/**
+ * @brief delay no more
+ * 
+ */
 class time_slice {
 public:
-  time_slice(unsigned long interval, void (*task)(void));
+  time_slice(unsigned long interval, void (*callback)(void));
   void update();
   bool isReady();
   void run();
@@ -17,3 +21,12 @@ private:
 };
 
 #endif
+
+/*__||_____||__
+  __||_____||__
+  ___\\___//___
+  _===========_
+  _____|||_____
+  _____|||_____
+  ______|______
+  ___防伪专用___*/
