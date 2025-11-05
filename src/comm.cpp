@@ -46,6 +46,12 @@ void processCommand(String cmd) {
         Serial.print("output limit set to: ");
         Serial.println(value);
     }
+    else if (cmd.startsWith("tg=")) { 
+        float value = cmd.substring(3).toFloat();
+        servo_pid.target = value;
+        Serial.print("Target set to: ");
+        Serial.println(value);
+    }
     else if (cmd.startsWith("reset")) {
         servo_pid.kp = 0.0;
         servo_pid.ki = 0.0;
@@ -70,6 +76,9 @@ void serial_cb()
 {
     // Serial.print("Distance:");
     Serial.print(distance);
+    // Serial.print("\n");
+    Serial.print(",");
+    Serial.print(servo_pid.target);
     Serial.print("\n");
     // Serial.print(" cm, PID Output: ");
     // Serial.print(servo_pid.get_output());
