@@ -10,15 +10,13 @@
 //定义全局变量
 Servo servo;
 //初始化PID参数
-pid servo_pid(0.2f, 0.0001f, 400.0f, 15.0f, 12.0f, 7.0f);
-//kp, ki, kd, lm,i_lm, t, target
+pid servo_pid(2.0f, 0.0001f, 10.0f, 25.0f, 10.0f, 8.0f);
 float distance;
 
 #define MAX_DISTANCE 20 // 最大距离（厘米）
-const int trig_pin = 7;
-const int echo_pin = 8;
-const int servo_pin = 9;
-NewPing sonar(trig_pin, echo_pin, MAX_DISTANCE);
+const int trigPin = 7;
+const int echoPin = 8;
+NewPing sonar(trigPin, echoPin, MAX_DISTANCE);
 
 //初始化滤波器
 mean_filter distance_mean_ft(5);
@@ -55,22 +53,22 @@ void ultrasonic_cb() {
 
 // 定义时间片
 time_slice serial_task(100, serial_cb);
-time_slice pid_task(25, pid_cb);
-time_slice servo_task(50, servo_cb);
-time_slice ultrasonic_task(25, ultrasonic_cb);
+time_slice pid_task(100, pid_cb);
+time_slice servo_task(200, servo_cb);
+time_slice ultrasonic_task(50, ultrasonic_cb);
 time_slice command_task(10, command_cb); 
 
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-  servo.attach(servo_pin);
+  servo.attach(9);
   servo.write(90);
   // 初始化超声波传感器引脚
-  pinMode(trig_pin, OUTPUT);
-  pinMode(echo_pin, INPUT);
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
   //初始化滤波器
-  for(u8 i=0; i<5; i++)
+  for(u8 i=0;i<5;i++)
   {
     ultrasonic_cb();
     delay(100);
