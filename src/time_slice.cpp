@@ -1,4 +1,3 @@
-// time_slice.cpp
 #include "time_slice.h"
 
 time_slice::time_slice(unsigned long interval, void (*callback)(void)) {
